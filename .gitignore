@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# production
+dist/
+
+# local env
+.env
+.env.local
+
+# logs
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Vite
+.vite/
+
+# Claude local settings
+.claude/settings.local.json
