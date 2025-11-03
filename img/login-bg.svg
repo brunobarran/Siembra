@@ -1,0 +1,30 @@
+<svg width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient areas -->
+  <defs>
+    <radialGradient id="blueGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#9EC2FF;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#9EC2FF;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="coralGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFB09E;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#FFB09E;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Light background -->
+  <rect width="1440" height="1024" fill="#F8F9FA"/>
+
+  <!-- Blue gradient -->
+  <circle cx="0" cy="0" r="842.5" fill="url(#blueGradient)"/>
+
+  <!-- Coral gradient -->
+  <circle cx="1000" cy="400" r="842.5" fill="url(#coralGradient)"/>
+
+  <!-- Family silhouette placeholder -->
+  <g opacity="0.3">
+    <circle cx="200" cy="400" r="60" fill="#015FB8"/>
+    <circle cx="300" cy="420" r="55" fill="#FF7933"/>
+    <circle cx="400" cy="410" r="50" fill="#015FB8"/>
+    <rect x="150" y="480" width="300" height="200" fill="#9EC2FF" opacity="0.3"/>
+  </g>
+</svg>

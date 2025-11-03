@@ -43,7 +43,7 @@ export default function Login({ onNext }) {
 
       {/* Background Image - hidden on mobile */}
       <img
-        src="/Siembra/img/login-bg.jpg"
+        src="/Siembra/img/login-bg.svg"
         alt="Familia feliz"
         className="hidden lg:block absolute left-0 top-0 w-full h-full object-cover"
       />
@@ -67,13 +67,13 @@ export default function Login({ onNext }) {
           {/* Header: Logos */}
           <div className="flex items-center justify-center gap-2.5 py-4 lg:py-6">
             <img
-              src="/Siembra/img/login-logo-siembra.png"
+              src="/Siembra/img/login-logo-siembra.svg"
               alt="AFP Siembra"
               className="w-[100px] lg:w-[124px] h-auto"
             />
             <div className="w-10 h-0 rotate-90 border border-[#E4E6EE]" />
             <img
-              src="/Siembra/img/login-logo-alcanza.png"
+              src="/Siembra/img/login-logo-alcanza.svg"
               alt="Alcanza"
               className="w-[140px] lg:w-[169px] h-auto"
             />
