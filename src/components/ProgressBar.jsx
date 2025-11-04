@@ -3,7 +3,7 @@ export default function ProgressBar({ currentStep }) {
   const progressPercentage = (currentStep / steps.length) * 100
 
   return (
-    <div className="relative w-full max-w-[800px] h-[75px] pb-[60px]">
+    <div className="relative w-full max-w-[800px] h-[75px] pb-[60px] mx-auto">
       {/* Línea de fondo gris */}
       <div
         className="absolute top-[22px] left-0 h-0 border-t-[6px] border-[#E4E6EE]"
@@ -13,7 +13,7 @@ export default function ProgressBar({ currentStep }) {
       {/* Línea de progreso naranja */}
       <div
         className="absolute top-[22px] left-0 h-0 border-t-[6px] border-[#FF7933]"
-        style={{ width: `${(currentStep - 1) * 256 + 166}px` }}
+        style={{ width: '770px' }}
       />
 
       {/* Círculos de pasos */}
@@ -32,11 +32,22 @@ export default function ProgressBar({ currentStep }) {
             <div className="relative w-10 h-[52px]">
               {/* Círculo exterior naranja */}
               <div className="absolute w-10 h-10 top-[6px] bg-[#FF7933] rounded-full" />
-              {/* Círculo medio blanco */}
-              <div className="absolute w-7 h-7 top-[12px] left-[6px] bg-white rounded-full" />
-              {/* Círculo interior (solo si es actual) */}
-              {isCurrent && (
-                <div className="absolute w-[22px] h-[22px] top-[15px] left-[9px] bg-[#FDB216] rounded-full" />
+
+              {/* Círculo interior - varía según estado */}
+              {isCompleted ? (
+                // Pasos completados: check blanco sobre fondo naranja (sin círculo blanco intermedio)
+                <svg className="absolute w-6 h-6 top-[14px] left-[8px] text-white" fill="white" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              ) : (
+                // Pasos futuros: círculo blanco intermedio
+                <>
+                  <div className="absolute w-7 h-7 top-[12px] left-[6px] bg-white rounded-full" />
+                  {isCurrent && (
+                    // Paso actual: círculo amarillo interno
+                    <div className="absolute w-[22px] h-[22px] top-[15px] left-[9px] bg-[#FDB216] rounded-full" />
+                  )}
+                </>
               )}
             </div>
 

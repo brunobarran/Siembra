@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Login from './pages/Login'
 import Step1 from './pages/Step1'
+import Step2 from './pages/Step2'
 import { defaultUserData } from './data/mockData'
 
 export default function App() {
@@ -30,8 +31,13 @@ export default function App() {
         <Step1 data={userData} onNext={handleNextStep} onBack={handleBackStep} />
       )}
 
+      {/* Paso 2: Información de Ingresos y Gastos */}
+      {step === 2 && (
+        <Step2 data={userData} onNext={handleNextStep} onBack={handleBackStep} />
+      )}
+
       {/* Placeholder for other steps */}
-      {step > 1 && (
+      {step > 2 && (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-primary mb-4">
