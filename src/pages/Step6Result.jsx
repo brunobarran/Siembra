@@ -345,7 +345,7 @@ export default function Step6Result({ data, onShare, onDownload, onPrint }) {
         {/* Logos Siembra + Alcanza */}
         <div className="py-6 flex items-center justify-center gap-2.5">
           <img
-            src="/Siembra/img/logo-siembra-white.png"
+            src="/Siembra/img/logo-siembra.png"
             alt="AFP Siembra"
             className="w-24 h-12 lg:w-32 lg:h-16 object-contain"
           />
