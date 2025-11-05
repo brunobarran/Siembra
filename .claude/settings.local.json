@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp add:*)",
+      "mcp__figma__get_design_context",
+      "mcp__figma__get_screenshot",
+      "mcp__figma__get_metadata",
+      "mcp__figma__get_variable_defs",
+      "Bash(npm create:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(npm run test:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: initial setup - Vite + React + Tailwind + Vitest\n\n- Initialized Vite project with React template\n- Configured Tailwind CSS v3 with custom colors (primary, secondary)\n- Set up Vitest with Testing Library for unit and integration tests\n- Installed dependencies: Recharts, gh-pages\n- Created folder structure: src/pages, src/components, src/data, src/test\n- Configured GitHub Pages deployment with base path\n- All tests passing (4/4)\n- Build successful\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(npm run dev:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
