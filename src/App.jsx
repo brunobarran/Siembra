@@ -4,14 +4,22 @@ import Step1 from './pages/Step1'
 import Step2 from './pages/Step2'
 import Step3 from './pages/Step3'
 import Step4 from './pages/Step4'
+import AIPhotoModal from './components/AIPhotoModal'
 import { defaultUserData } from './data/mockData'
 
 export default function App() {
   const [step, setStep] = useState(0)
   const [userData, setUserData] = useState(defaultUserData)
+  const [showAIModal, setShowAIModal] = useState(false)
 
   const handleNextStep = (newData) => {
     setUserData({ ...userData, ...newData })
+
+    // Mostrar modal IA después de Step4 (opcional)
+    if (step === 4) {
+      setShowAIModal(true)
+    }
+
     setStep(step + 1)
   }
 
@@ -19,6 +27,17 @@ export default function App() {
     if (step > 0) {
       setStep(step - 1)
     }
+  }
+
+  const handleUploadPhoto = async (file) => {
+    // Mock: simulamos upload exitoso
+    console.log('Uploading file:', file.name)
+    await new Promise(resolve => setTimeout(resolve, 2000))
+
+    // Aquí iría la llamada a la API de IA
+    // const response = await fetch('/api/ai-future-me', { method: 'POST', body: formData })
+
+    console.log('Upload successful!')
   }
 
   return (
@@ -45,17 +64,25 @@ export default function App() {
 
       {/* Paso 4: Simulador Avanzado de Pensión */}
       {step === 4 && (
-        <Step4 data={userData} onNext={handleNextStep} />
+        <Step4 data={userData} onNext={handleNextStep} onBack={handleBackStep} />
       )}
+
+      {/* Modal IA "Yo del Futuro" */}
+      <AIPhotoModal
+        isOpen={showAIModal}
+        onClose={() => setShowAIModal(false)}
+        onUpload={handleUploadPhoto}
+        data={userData}
+      />
 
       {/* Placeholder for other steps */}
       {step > 4 && (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-primary mb-4">
-              Paso {step}
+              ¡Wizard Completado! 🎉
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 mb-4">
               Datos: {JSON.stringify(userData, null, 2)}
             </p>
             <button
