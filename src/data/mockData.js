@@ -136,3 +136,145 @@ export function generateSavingsChart(userData) {
 
   return data
 }
+
+// Calcular pensión avanzada con parámetros ajustados
+export function calculateAdvancedPension(userData, advancedParams) {
+  const {
+    age,
+    monthlySalary,
+    afpBalance,
+    desiredPension
+  } = userData
+
+  const {
+    advancedRetirementAge,
+    advancedVoluntaryContribution,
+    annualSalaryIncrease,
+    annualExtraordinaryContribution = 0
+  } = advancedParams
+
+  const yearsToRetirement = advancedRetirementAge - age
+
+  // Si ya pasó la edad de retiro
+  if (yearsToRetirement <= 0) {
+    const basicPension = afpBalance * 0.04 / 12
+    return {
+      projectedPension: Math.round(basicPension),
+      difference: Math.max(0, desiredPension - basicPension),
+      differenceIsPositive: basicPension >= desiredPension,
+      score: 5,
+      message: '¡Atención!',
+      description: 'Ya alcanzaste tu edad de retiro.',
+      totalSavingsAtRetirement: afpBalance,
+      differenceVsBase: 0
+    }
+  }
+
+  let currentSalary = monthlySalary
+  let totalSavings = afpBalance
+  const annualReturn = 0.05
+
+  // Simular año por año
+  for (let year = 0; year < yearsToRetirement; year++) {
+    // Aporte obligatorio + voluntario
+    const monthlyContribution = (currentSalary * 0.1029) + advancedVoluntaryContribution
+    const annualContributions = monthlyContribution * 12
+
+    // Aporte extraordinario
+    const yearContributions = annualContributions + annualExtraordinaryContribution
+
+    // Aplicar rentabilidad
+    totalSavings = (totalSavings + yearContributions) * (1 + annualReturn)
+
+    // Incremento salarial para próximo año
+    currentSalary *= (1 + annualSalaryIncrease / 100)
+  }
+
+  // Pensión mensual (4% del saldo final)
+  const projectedPension = Math.round(totalSavings * 0.04 / 12)
+
+  // Calcular diferencia vs deseada
+  const difference = projectedPension - desiredPension
+  const differenceIsPositive = difference >= 0
+
+  let score, message, description
+
+  if (differenceIsPositive) {
+    // Proyectada >= Deseada
+    score = 9
+    message = '¡Felicidades!'
+    description = 'Con estos ajustes, tendrás el control para volver tu Proyección Avanzada una realidad para tu retiro.'
+  } else {
+    const gapPercentage = Math.abs(difference / desiredPension) * 100
+
+    if (gapPercentage <= 10) {
+      score = 8
+      message = '¡Casi perfecto!'
+      description = 'Estás muy cerca de tu pensión deseada con estos ajustes.'
+    } else {
+      score = 6
+      message = '¡Buen avance!'
+      description = 'Has mejorado significativamente tu proyección.'
+    }
+  }
+
+  return {
+    projectedPension,
+    difference: Math.abs(difference),
+    differenceIsPositive,
+    score: Math.max(0, Math.min(10, score)),
+    message,
+    description,
+    totalSavingsAtRetirement: Math.round(totalSavings),
+    differenceVsBase: 0  // Se calculará después
+  }
+}
+
+// Generar datos para gráfico comparativo (2 áreas: base + avanzada)
+export function generateComparisonChart(userData, advancedParams) {
+  const { age, retirementAge } = userData
+  const { advancedRetirementAge } = advancedParams
+
+  const maxAge = Math.max(retirementAge, advancedRetirementAge)
+  const data = []
+
+  // Generar proyección base
+  const baseChart = generateSavingsChart(userData)
+
+  // Generar proyección avanzada
+  let currentSalary = userData.monthlySalary
+  let advancedSavings = userData.afpBalance
+  const annualReturn = 0.05
+
+  const advancedChartData = []
+  for (let currentAge = age; currentAge <= advancedRetirementAge; currentAge++) {
+    advancedChartData.push({
+      age: currentAge,
+      savings: Math.round(advancedSavings)
+    })
+
+    // Calcular contribuciones para próximo año
+    if (currentAge < advancedRetirementAge) {
+      const monthlyContribution = (currentSalary * 0.1029) + (advancedParams.advancedVoluntaryContribution || 0)
+      const annualContributions = monthlyContribution * 12
+      const yearContributions = annualContributions + (advancedParams.annualExtraordinaryContribution || 0)
+
+      advancedSavings = (advancedSavings + yearContributions) * (1 + annualReturn)
+      currentSalary *= (1 + (advancedParams.annualSalaryIncrease || 0) / 100)
+    }
+  }
+
+  // Combinar en un solo dataset
+  for (let currentAge = age; currentAge <= maxAge; currentAge++) {
+    const basePoint = baseChart.find(p => p.age === currentAge)
+    const advancedPoint = advancedChartData.find(p => p.age === currentAge)
+
+    data.push({
+      age: currentAge,
+      baseSavings: basePoint ? basePoint.savings : 0,
+      advancedSavings: advancedPoint ? advancedPoint.savings : 0
+    })
+  }
+
+  return data
+}

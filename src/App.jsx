@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import Step1 from './pages/Step1'
 import Step2 from './pages/Step2'
 import Step3 from './pages/Step3'
+import Step4 from './pages/Step4'
 import { defaultUserData } from './data/mockData'
 
 export default function App() {
@@ -42,8 +43,13 @@ export default function App() {
         <Step3 data={userData} onNext={handleNextStep} />
       )}
 
+      {/* Paso 4: Simulador Avanzado de Pensión */}
+      {step === 4 && (
+        <Step4 data={userData} onNext={handleNextStep} />
+      )}
+
       {/* Placeholder for other steps */}
-      {step > 3 && (
+      {step > 4 && (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-primary mb-4">

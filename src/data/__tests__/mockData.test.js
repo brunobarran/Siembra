@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { calculateAge, formatCurrency, calculateBasePension, generateSavingsChart } from '../mockData'
+import { calculateAge, formatCurrency, calculateBasePension, generateSavingsChart, calculateAdvancedPension, generateComparisonChart } from '../mockData'
 
 describe('mockData utilities', () => {
   describe('calculateAge', () => {
@@ -245,6 +245,195 @@ describe('mockData utilities', () => {
       expect(chartData.length).toBe(2)
       expect(chartData[0].age).toBe(64)
       expect(chartData[1].age).toBe(65)
+    })
+  })
+
+  describe('calculateAdvancedPension', () => {
+    const mockUserData = {
+      age: 55,
+      retirementAge: 65,
+      monthlySalary: 100000,
+      afpBalance: 500000,
+      desiredPension: 80000,
+      voluntaryContributions: 0
+    }
+
+    const advancedParams = {
+      advancedRetirementAge: 65,
+      advancedVoluntaryContribution: 10000,
+      annualSalaryIncrease: 5,
+      annualExtraordinaryContribution: 0
+    }
+
+    it('should calculate advanced pension correctly', () => {
+      const result = calculateAdvancedPension(mockUserData, advancedParams)
+
+      expect(result).toHaveProperty('projectedPension')
+      expect(result).toHaveProperty('difference')
+      expect(result).toHaveProperty('differenceIsPositive')
+      expect(result).toHaveProperty('score')
+      expect(result).toHaveProperty('message')
+      expect(result).toHaveProperty('description')
+      expect(result).toHaveProperty('totalSavingsAtRetirement')
+
+      expect(result.projectedPension).toBeGreaterThan(0)
+      expect(result.score).toBeGreaterThanOrEqual(0)
+      expect(result.score).toBeLessThanOrEqual(10)
+    })
+
+    it('should return high score when projected pension is close to desired', () => {
+      // First calculate what the projected pension will be
+      const result = calculateAdvancedPension(mockUserData, advancedParams)
+
+      // Then use a lower desired pension that we know the projection can exceed
+      const highScore = Math.max(result.projectedPension * 0.8, 1000)
+      const betterData = {
+        ...mockUserData,
+        desiredPension: Math.floor(highScore)
+      }
+
+      const betterResult = calculateAdvancedPension(betterData, advancedParams)
+
+      expect(betterResult.score).toBeGreaterThanOrEqual(6)
+      expect(betterResult.message).toMatch(/¡Felicidades!|¡Casi perfecto!|¡Buen avance!/)
+    })
+
+    it('should handle advanced params with extra contributions', () => {
+      const paramsWithExtra = {
+        ...advancedParams,
+        annualExtraordinaryContribution: 50000
+      }
+
+      const result = calculateAdvancedPension(mockUserData, paramsWithExtra)
+
+      expect(result.projectedPension).toBeGreaterThan(0)
+      expect(result.score).toBeGreaterThanOrEqual(0)
+    })
+
+    it('should handle higher salary increase', () => {
+      const paramsHighIncrease = {
+        ...advancedParams,
+        annualSalaryIncrease: 10
+      }
+
+      const resultLow = calculateAdvancedPension(mockUserData, advancedParams)
+      const resultHigh = calculateAdvancedPension(mockUserData, paramsHighIncrease)
+
+      expect(resultHigh.totalSavingsAtRetirement).toBeGreaterThan(resultLow.totalSavingsAtRetirement)
+    })
+
+    it('should calculate higher projected pension with more voluntary contributions', () => {
+      const paramsMoreContrib = {
+        ...advancedParams,
+        advancedVoluntaryContribution: 20000
+      }
+
+      const resultLow = calculateAdvancedPension(mockUserData, advancedParams)
+      const resultHigh = calculateAdvancedPension(mockUserData, paramsMoreContrib)
+
+      expect(resultHigh.projectedPension).toBeGreaterThan(resultLow.projectedPension)
+    })
+
+    it('should handle postponed retirement age', () => {
+      const paramsPostponed = {
+        ...advancedParams,
+        advancedRetirementAge: 70  // 5 años más
+      }
+
+      const resultNormal = calculateAdvancedPension(mockUserData, advancedParams)
+      const resultPostponed = calculateAdvancedPension(mockUserData, paramsPostponed)
+
+      expect(resultPostponed.totalSavingsAtRetirement).toBeGreaterThan(resultNormal.totalSavingsAtRetirement)
+    })
+
+    it('should handle zero advanced voluntary contribution', () => {
+      const paramsZeroContrib = {
+        ...advancedParams,
+        advancedVoluntaryContribution: 0
+      }
+
+      const result = calculateAdvancedPension(mockUserData, paramsZeroContrib)
+
+      expect(result.projectedPension).toBeGreaterThan(0)
+    })
+  })
+
+  describe('generateComparisonChart', () => {
+    const mockUserData = {
+      age: 55,
+      retirementAge: 65,
+      monthlySalary: 100000,
+      afpBalance: 500000,
+      desiredPension: 80000,
+      voluntaryContributions: 0
+    }
+
+    const advancedParams = {
+      advancedRetirementAge: 65,
+      advancedVoluntaryContribution: 10000,
+      annualSalaryIncrease: 5,
+      annualExtraordinaryContribution: 0
+    }
+
+    it('should generate comparison chart data', () => {
+      const chartData = generateComparisonChart(mockUserData, advancedParams)
+
+      expect(chartData).toBeInstanceOf(Array)
+      expect(chartData.length).toBeGreaterThan(0)
+    })
+
+    it('should have baseSavings and advancedSavings for each point', () => {
+      const chartData = generateComparisonChart(mockUserData, advancedParams)
+
+      chartData.forEach((point) => {
+        expect(point).toHaveProperty('age')
+        expect(point).toHaveProperty('baseSavings')
+        expect(point).toHaveProperty('advancedSavings')
+        expect(point.baseSavings).toBeGreaterThanOrEqual(0)
+        expect(point.advancedSavings).toBeGreaterThanOrEqual(0)
+      })
+    })
+
+    it('should have advancedSavings >= baseSavings at each point', () => {
+      const chartData = generateComparisonChart(mockUserData, advancedParams)
+
+      chartData.forEach((point) => {
+        expect(point.advancedSavings).toBeGreaterThanOrEqual(point.baseSavings)
+      })
+    })
+
+    it('should show higher difference with extra contributions', () => {
+      const paramsWithExtra = {
+        ...advancedParams,
+        annualExtraordinaryContribution: 50000
+      }
+
+      const chartNormal = generateComparisonChart(mockUserData, advancedParams)
+      const chartWithExtra = generateComparisonChart(mockUserData, paramsWithExtra)
+
+      const lastPointNormal = chartNormal[chartNormal.length - 1]
+      const lastPointExtra = chartWithExtra[chartWithExtra.length - 1]
+
+      expect(lastPointExtra.advancedSavings).toBeGreaterThan(lastPointNormal.advancedSavings)
+    })
+
+    it('should handle postponed retirement age in comparison', () => {
+      const paramsPostponed = {
+        ...advancedParams,
+        advancedRetirementAge: 70
+      }
+
+      const chartData = generateComparisonChart(mockUserData, paramsPostponed)
+
+      const lastAge = chartData[chartData.length - 1].age
+      expect(lastAge).toBe(70)
+    })
+
+    it('should cover full range from current age to max retirement age', () => {
+      const chartData = generateComparisonChart(mockUserData, advancedParams)
+
+      expect(chartData[0].age).toBe(mockUserData.age)
+      expect(chartData[chartData.length - 1].age).toBe(advancedParams.advancedRetirementAge)
     })
   })
 })
