@@ -92,7 +92,7 @@ export default function AIPhotoModal({ isOpen, onClose, onUpload, data }) {
       onClick={handleOverlayClick}
     >
       {/* Modal */}
-      <div className="w-full max-w-[600px] mx-4 lg:mx-0 p-6 lg:p-10 bg-white rounded-2xl shadow-[0px_0px_24px_rgba(0,0,0,0.25)] flex flex-col gap-8">
+      <div className="w-full max-w-[600px] mx-4 lg:mx-0 p-4 sm:p-6 lg:p-10 bg-white rounded-2xl shadow-[0px_0px_24px_rgba(0,0,0,0.25)] flex flex-col gap-4 sm:gap-6 lg:gap-8 max-h-[90vh] overflow-y-auto">
         {/* Contenido */}
         <div className="flex flex-col gap-3">
           {/* Botón Cerrar */}
@@ -129,12 +129,12 @@ export default function AIPhotoModal({ isOpen, onClose, onUpload, data }) {
           </div>
 
           {/* Título */}
-          <h2 className="text-black text-xl lg:text-2xl font-bold leading-6 text-center">
+          <h2 className="text-black text-lg sm:text-xl lg:text-2xl font-bold leading-5 sm:leading-6 text-center">
             ¿Quieres ver el resultado de tus decisiones?
           </h2>
 
           {/* Descripción */}
-          <p className="text-[#4C4C4C] text-base leading-5 text-center">
+          <p className="text-[#4C4C4C] text-xs sm:text-sm lg:text-base leading-4 sm:leading-5 text-center">
             Sube una foto y nuestra IA te mostrará cómo luciría tu "Yo del Futuro" al momento de tu retiro.
           </p>
 
@@ -150,38 +150,38 @@ export default function AIPhotoModal({ isOpen, onClose, onUpload, data }) {
             />
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="w-full p-4 bg-white rounded-lg border border-gray-200 flex items-center gap-2.5 hover:border-orange-400 transition-colors cursor-pointer"
+              className="w-full p-2 sm:p-3 lg:p-4 bg-white rounded-lg border border-gray-200 flex items-center gap-2 lg:gap-2.5 hover:border-orange-400 transition-colors cursor-pointer"
             >
-              <span className="flex-1 text-left text-[#949494] text-sm leading-5">
+              <span className="flex-1 text-left text-[#949494] text-xs sm:text-sm lg:text-base leading-4 sm:leading-5 truncate">
                 {selectedFile ? selectedFile.name : 'Sube tu foto'}
               </span>
-              <span className="text-black text-lg">📤</span>
+              <span className="text-black text-base sm:text-lg lg:text-xl flex-shrink-0">📤</span>
             </button>
 
             {/* Error message */}
             {error && (
-              <p className="text-red-600 text-sm mt-2">{error}</p>
+              <p className="text-red-600 text-xs sm:text-sm mt-2">{error}</p>
             )}
           </div>
 
           {/* Nota sobre archivos */}
-          <p className="text-[#4C4C4C] text-base leading-4 text-center">
+          <p className="text-[#4C4C4C] text-[10px] sm:text-xs lg:text-base leading-3 sm:leading-4 text-center">
             Tipo de archivo: jpg, png. Con un peso menor o igual a 5 MB
           </p>
         </div>
 
         {/* Botones */}
-        <div className="flex flex-col lg:flex-row justify-center items-stretch lg:items-center gap-4 lg:gap-8 w-full">
+        <div className="flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-2 sm:gap-4 lg:gap-8 w-full">
           <button
             onClick={onClose}
-            className="px-4 lg:px-6 py-4 lg:py-6 rounded-[100px] border border-orange-400 text-orange-400 text-lg lg:text-xl font-bold leading-5 hover:bg-orange-50 transition-colors cursor-pointer"
+            className="px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 rounded-[100px] border border-orange-400 text-orange-400 text-xs sm:text-base lg:text-lg font-bold leading-4 sm:leading-5 hover:bg-orange-50 transition-colors cursor-pointer"
           >
             Saltar
           </button>
           <button
             onClick={handleUploadClick}
             disabled={isUploading || !selectedFile}
-            className="px-4 lg:px-6 py-4 lg:py-6 bg-orange-400 rounded-[100px] text-white text-lg lg:text-xl font-bold leading-5 hover:bg-orange-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            className="px-3 sm:px-4 lg:px-6 py-2 sm:py-3 lg:py-4 bg-orange-400 rounded-[100px] text-white text-xs sm:text-base lg:text-lg font-bold leading-4 sm:leading-5 hover:bg-orange-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {isUploading ? 'Subiendo...' : 'Subir imagen'}
           </button>

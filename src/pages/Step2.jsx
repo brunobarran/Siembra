@@ -349,20 +349,20 @@ export default function Step2({ data, onNext, onBack }) {
               <div className="flex-1 h-0 border-t-2 border-gray-200"></div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-6">
               <div>
-                <label className="block text-neutral-600 text-base font-normal mb-2">
+                <label className="block text-neutral-600 text-xs lg:text-base font-normal mb-2">
                   ¿Cuál es tú AFP?
                 </label>
                 <input
                   type="text"
                   value={formData.afpName}
                   disabled
-                  className="w-full p-4 bg-gray-200 border border-gray-200 rounded-lg text-black cursor-not-allowed"
+                  className="w-full p-2 lg:p-4 bg-gray-200 border border-gray-200 rounded-lg text-xs lg:text-base text-black cursor-not-allowed"
                 />
               </div>
               <div>
-                <label className="block text-neutral-600 text-base font-normal mb-2">
+                <label className="block text-neutral-600 text-xs lg:text-base font-normal mb-2">
                   ¿Cuál es tu saldo en cuenta?
                   <span className="text-red-600 font-bold">*</span>
                 </label>
@@ -370,18 +370,18 @@ export default function Step2({ data, onNext, onBack }) {
                   type="number"
                   value={formData.afpBalance || ''}
                   onChange={(e) => handleChange('afpBalance', e.target.value)}
-                  className="w-full p-4 border border-gray-200 rounded-lg"
+                  className="w-full p-2 lg:p-4 border border-gray-200 rounded-lg text-xs lg:text-base"
                   placeholder="Ingresa tu monto en pesos"
                 />
-                <p className="text-xs text-blue-600 mt-2 underline cursor-pointer">
+                <p className="text-[10px] lg:text-xs text-blue-600 mt-2 underline cursor-pointer">
                   ¿No sabes cuál es tu saldo?
                 </p>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6 mt-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-6 mt-3 lg:mt-6">
               <div>
-                <label className="block text-neutral-600 text-base font-normal mb-2">
+                <label className="block text-neutral-600 text-xs lg:text-base font-normal mb-2">
                   ¿Cuál seria la pensión que deseas a tu edad de retiro?
                   <span className="text-red-600 font-bold">*</span>
                 </label>
@@ -389,19 +389,19 @@ export default function Step2({ data, onNext, onBack }) {
                   type="number"
                   value={formData.desiredPension || ''}
                   onChange={(e) => handleChange('desiredPension', e.target.value)}
-                  className="w-full p-4 border border-gray-200 rounded-lg"
+                  className="w-full p-2 lg:p-4 border border-gray-200 rounded-lg text-xs lg:text-base"
                   placeholder="RD$"
                 />
               </div>
               <div>
-                <label className="block text-neutral-600 text-base font-normal mb-2">
+                <label className="block text-neutral-600 text-xs lg:text-base font-normal mb-2">
                   ¿Realizas aportes voluntarios mensuales?
                 </label>
                 <input
                   type="number"
                   value={formData.voluntaryContributions || ''}
                   onChange={(e) => handleChange('voluntaryContributions', e.target.value)}
-                  className="w-full p-4 border border-gray-200 rounded-lg"
+                  className="w-full p-2 lg:p-4 border border-gray-200 rounded-lg text-xs lg:text-base"
                   placeholder="Ingresa tu monto en pesos"
                 />
               </div>
@@ -409,24 +409,24 @@ export default function Step2({ data, onNext, onBack }) {
           </div>
 
           {/* Botones de Acción */}
-          <div className="flex justify-between items-center gap-6 mt-8">
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-3 lg:gap-6 mt-6 lg:mt-8">
             <button
               type="button"
-              className="px-6 py-4 text-primary font-bold"
+              className="px-4 lg:px-6 py-3 lg:py-4 text-primary font-bold text-xs lg:text-base"
             >
               Dejar para después
             </button>
-            <div className="flex gap-6">
+            <div className="flex flex-col sm:flex-row gap-3 lg:gap-6 w-full lg:w-auto">
               <button
                 type="button"
                 onClick={onBack}
-                className="px-6 py-4 border-2 border-primary text-primary font-bold rounded-3xl hover:bg-primary hover:text-white transition"
+                className="px-4 lg:px-6 py-3 lg:py-4 border-2 border-primary text-primary font-bold text-xs lg:text-base rounded-3xl hover:bg-primary hover:text-white transition flex-1 sm:flex-none"
               >
                 Volver
               </button>
               <button
                 type="submit"
-                className="px-6 py-4 bg-primary text-white font-bold rounded-3xl hover:bg-orange-500 transition"
+                className="px-4 lg:px-6 py-3 lg:py-4 bg-primary text-white font-bold text-xs lg:text-base rounded-3xl hover:bg-orange-500 transition flex-1 sm:flex-none"
               >
                 Continuar
               </button>
