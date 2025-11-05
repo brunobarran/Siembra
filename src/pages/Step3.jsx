@@ -293,10 +293,10 @@ export default function Step3({ data, onNext }) {
           </div>
 
           {/* Botón Único */}
-          <div className="py-4 flex justify-end">
+          <div className="py-4 flex justify-center lg:justify-end">
             <button
               onClick={handleContinue}
-              className="px-6 py-4 bg-orange-400 text-white text-base font-bold rounded-3xl
+              className="px-4 lg:px-6 py-3 lg:py-4 bg-orange-400 text-white text-sm lg:text-base font-bold rounded-3xl
                 hover:bg-orange-500 transition-colors whitespace-nowrap"
             >
               Ir al Simulador y mejorar mi proyección
