@@ -1,4 +1,4 @@
-// Default user data structure
+// Default user data structure - Legacy export (for backward compatibility)
 export const defaultUserData = {
   // Login
   name: '',
@@ -8,6 +8,68 @@ export const defaultUserData = {
   age: null,
 
   // Will be extended for other steps
+}
+
+/**
+ * Valores por defecto del usuario
+ * Se usa como initialValue en useLocalStorage
+ */
+export function getDefaultUserData() {
+  return {
+    // Login (opcional)
+    email: '',
+    hasAccount: false,
+
+    // Step1: Información Personal y Laboral
+    name: '',
+    documentId: '',
+    birthDate: '',
+    age: null,
+    retirementAge: 65,
+    civilStatus: '',
+    dependents: 0,
+    profession: '',
+    employmentYears: 0,
+    currentlyWorking: true,
+
+    // Step2: Ingresos y Gastos
+    monthlySalary: null,
+    otherIncome: 0,
+    housingType: 'rent',
+    housingExpense: 0,
+    householdExpense: 0,
+    educationExpense: 0,
+    debtPayment: 0,
+    entertainment: 0,
+    emergencies: 0,
+    afpName: 'AFP Siembra',
+    afpBalance: 0,
+    desiredPension: 80000,
+    voluntaryContributions: 0,
+
+    // Step3: Proyección Base (calculados)
+    projectedPension: null,
+    score: null,
+    difference: null,
+    totalSavingsAtRetirement: null,
+
+    // Step4: Simulador Avanzado
+    advancedParams: {
+      advancedRetirementAge: 65,
+      advancedVoluntaryContribution: 0,
+      annualSalaryIncrease: 5,
+      annualExtraordinaryContribution: 0
+    },
+    advancedPensionData: null,
+
+    // Step5: Foto IA (opcional)
+    userPhoto: null,
+    hasAIPhoto: false,
+
+    // Meta
+    completedSteps: [],
+    lastUpdated: new Date().toISOString()
+  }
 }
 
 // Helper: Calcular edad desde fecha de nacimiento

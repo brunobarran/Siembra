@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocalStorage, clearWizardData } from './hooks/useLocalStorage'
 import Login from './pages/Login'
 import Step1 from './pages/Step1'
 import Step2 from './pages/Step2'
@@ -6,15 +7,25 @@ import Step3 from './pages/Step3'
 import Step4 from './pages/Step4'
 import Step6Result from './pages/Step6Result'
 import AIPhotoModal from './components/AIPhotoModal'
-import { defaultUserData, generateActionPlan } from './data/mockData'
+import { getDefaultUserData, generateActionPlan } from './data/mockData'
 
 export default function App() {
-  const [step, setStep] = useState(0)
-  const [userData, setUserData] = useState(defaultUserData)
+  // ✅ PERSISTENCIA: localStorage con recuperación automática
+  const [step, setStep] = useLocalStorage('siembra-wizard-step', 0)
+  const [userData, setUserData] = useLocalStorage(
+    'siembra-wizard-data',
+    getDefaultUserData()
+  )
   const [showAIModal, setShowAIModal] = useState(false)
 
   const handleNextStep = (newData) => {
-    setUserData({ ...userData, ...newData })
+    // ✅ PERSISTENCIA: Guardar con metadata
+    setUserData(prev => ({
+      ...prev,
+      ...newData,
+      completedSteps: [...new Set([...prev.completedSteps, step])],
+      lastUpdated: new Date().toISOString()
+    }))
 
     // Mostrar modal IA después de Step4 (opcional)
     if (step === 4) {
@@ -30,6 +41,16 @@ export default function App() {
     }
   }
 
+  // ✅ NUEVO: Handler para reset del wizard
+  const handleReset = () => {
+    if (window.confirm('¿Estás seguro de que quieres reiniciar el simulador?')) {
+      clearWizardData()
+      setStep(0)
+      setUserData(getDefaultUserData())
+      window.location.reload() // Fuerza recarga limpia
+    }
+  }
+
   const handleUploadPhoto = async (file) => {
     // Mock: simulamos upload exitoso
     console.log('Uploading file:', file.name)
@@ -38,17 +59,27 @@ export default function App() {
     const reader = new FileReader()
     reader.onload = (e) => {
       const photoDataUrl = e.target.result
+
+      // ✅ PERSISTENCIA: Guardar en userData
       setUserData(prev => ({
         ...prev,
-        userPhoto: photoDataUrl
+        userPhoto: photoDataUrl,
+        hasAIPhoto: true,
+        lastUpdated: new Date().toISOString()
       }))
+
+      // ✅ PERSISTENCIA: Guardar separado en localStorage (por tamaño)
+      window.localStorage.setItem('siembra-user-photo', photoDataUrl)
+
+      setShowAIModal(false)
+    }
+    reader.onerror = () => {
+      console.error('Error reading file')
+      alert('Error al cargar la imagen. Por favor, intenta de nuevo.')
     }
     reader.readAsDataURL(file)
 
     await new Promise(resolve => setTimeout(resolve, 2000))
-
-    // Aquí iría la llamada a la API de IA
-    // const response = await fetch('/api/ai-future-me', { method: 'POST', body: formData })
 
     console.log('Upload successful!')
   }
@@ -78,6 +109,16 @@ export default function App() {
 
   return (
     <div>
+      {/* ✅ BOTÓN DEBUG: Reset wizard (solo en desarrollo) */}
+      {import.meta.env.DEV && (
+        <button
+          onClick={handleReset}
+          className="fixed top-4 right-4 z-50 px-3 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+        >
+          Reset Wizard
+        </button>
+      )}
+
       {/* Paso 0: Login */}
       {step === 0 && (
         <Login onNext={handleNextStep} />
