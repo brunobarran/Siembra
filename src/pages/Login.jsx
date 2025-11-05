@@ -51,7 +51,7 @@ export default function Login({ onNext }) {
       {/* Card Flotante - responsive */}
       <div
         className="
-          relative lg:absolute
+          relative lg:absolute lg:z-20
           mx-4 my-4 lg:mx-0 lg:my-0
           lg:left-[774px] lg:top-[80px]
           w-auto lg:w-[520px]
@@ -193,7 +193,7 @@ export default function Login({ onNext }) {
 
       {/* Footer - responsive: stack en mobile */}
       <div className="
-        absolute bottom-0 left-0 w-full
+        absolute bottom-0 left-0 w-full z-10
         px-4 py-6 lg:h-[100px]
         flex flex-col lg:flex-row
         items-center justify-center
