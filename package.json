@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/brunobarran/Siembra/issues"
   },
-  "homepage": "https://github.com/brunobarran/Siembra#readme",
+  "homepage": "https://brunobarran.github.io/Siembra/",
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
