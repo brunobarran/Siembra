@@ -278,3 +278,46 @@ export function generateComparisonChart(userData, advancedParams) {
 
   return data
 }
+
+// Generar plan de acción personalizado para Step6
+export function generateActionPlan(userData, advancedParams = {}) {
+  const voluntaryAmount = advancedParams.advancedVoluntaryContribution || 0
+
+  const plan = {
+    voluntarySavings: {
+      expanded: true,
+      items: [
+        {
+          description: `Destinar ${voluntaryAmount > 0 ? `RD$ ${voluntaryAmount.toLocaleString()}` : 'una cantidad'} mensuales a un fondo de ahorro voluntario, con el objetivo de acumular el capital necesario para complementar la pensión obligatoria.`
+        },
+        {
+          description: 'Revisar y ajustar el plan de ahorro cada 6 meses, asegurando que la estrategia se mantenga alineada con las condiciones del mercado y con tus necesidades financieras.'
+        }
+      ]
+    },
+    debtReduction: {
+      expanded: false,
+      items: [
+        {
+          description: 'Priorizar el pago de deudas con mayor tasa de interés (tarjetas de crédito).'
+        },
+        {
+          description: 'Destinar al menos 20% de tus ingresos mensuales al pago de deudas hasta eliminarlas.'
+        }
+      ]
+    },
+    retirementPreparation: {
+      expanded: false,
+      items: [
+        {
+          description: 'Revisar anualmente tu proyección de pensión obligatoria con tu AFP.'
+        },
+        {
+          description: 'Evaluar opciones de pensión mixta (obligatoria + voluntaria) para optimizar retiro.'
+        }
+      ]
+    }
+  }
+
+  return plan
+}

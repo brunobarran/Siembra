@@ -119,8 +119,8 @@ export default function AIPhotoModal({ isOpen, onClose, onUpload, data }) {
                 alt="Medalla"
                 className="absolute object-contain"
                 style={{
-                  width: '4rem',
-                  height: '4rem',
+                  width: '5rem',
+                  height: '5rem',
                   right: '-1rem',
                   bottom: '-1rem'
                 }}
