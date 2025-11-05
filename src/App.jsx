@@ -165,6 +165,7 @@ export default function App() {
           onShare={handleShare}
           onDownload={handleDownload}
           onPrint={handlePrint}
+          onReset={handleReset}
         />
       )}
 

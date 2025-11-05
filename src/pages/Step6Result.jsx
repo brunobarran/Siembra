@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
-export default function Step6Result({ data, onShare, onDownload, onPrint }) {
+export default function Step6Result({ data, onShare, onDownload, onPrint, onReset }) {
   const [expandedSections, setExpandedSections] = useState({
     voluntarySavings: true,
     debtReduction: false,
@@ -340,6 +340,16 @@ export default function Step6Result({ data, onShare, onDownload, onPrint }) {
           Listo: te enviamos por correo la evaluación, tu{' '}
           <span className="font-bold">Proyección Avanzada y tus recomendaciones.</span>
         </p>
+
+        {/* Botón Reset */}
+        <div className="pt-4">
+          <button
+            onClick={onReset}
+            className="px-6 py-3 rounded-3xl border-2 border-red-500 text-red-500 text-sm lg:text-base font-bold leading-4 hover:bg-red-50 transition-colors"
+          >
+            <span>↻ Reiniciar Simulador</span>
+          </button>
+        </div>
 
         {/* Logos Siembra + Alcanza */}
         <div className="py-6 flex items-center justify-center gap-2.5">
