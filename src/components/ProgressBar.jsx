@@ -1,5 +1,6 @@
 export default function ProgressBar({ currentStep }) {
   const steps = [1, 2, 3, 4]
+  // 75% para step 3 significa que el progreso es 75% del total
   const progressPercentage = (currentStep / steps.length) * 100
 
   return (
