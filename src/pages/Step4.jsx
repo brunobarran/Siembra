@@ -3,7 +3,6 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import Header from '../components/Header'
 import ProgressBar from '../components/ProgressBar'
 import Footer from '../components/Footer'
-import ChatBubble from '../components/ChatBubble'
 import { calculateAdvancedPension, generateComparisonChart } from '../data/mockData'
 
 export default function Step4({ data, onNext }) {
@@ -426,7 +425,6 @@ export default function Step4({ data, onNext }) {
       </div>
 
       <Footer />
-      <ChatBubble />
     </div>
   )
 }

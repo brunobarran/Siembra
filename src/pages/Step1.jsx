@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Header from '../components/Header'
 import ProgressBar from '../components/ProgressBar'
 import Footer from '../components/Footer'
-import ChatBubble from '../components/ChatBubble'
 import { calculateAge } from '../data/mockData'
 
 export default function Step1({ data, onNext, onBack }) {
@@ -194,9 +193,6 @@ export default function Step1({ data, onNext, onBack }) {
 
       {/* Footer */}
       <Footer />
-
-      {/* Chat Bubble */}
-      <ChatBubble />
     </div>
   )
 }

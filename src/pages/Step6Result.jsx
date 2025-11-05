@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
-import ChatBubble from '../components/ChatBubble'
 
 export default function Step6Result({ data, onShare, onDownload, onPrint }) {
   const [expandedSections, setExpandedSections] = useState({
@@ -360,16 +359,6 @@ export default function Step6Result({ data, onShare, onDownload, onPrint }) {
 
       {/* Footer */}
       <Footer />
-
-      {/* Chat Bubble con mensaje */}
-      <div className="fixed bottom-20 right-4 lg:bottom-24 lg:right-8 flex flex-col items-end gap-2 z-40">
-        <div className="px-4 py-3 bg-white shadow-[0px_4px_14px_rgba(0,0,0,0.14)] rounded-lg">
-          <p className="text-black text-sm font-normal whitespace-nowrap">
-            Hola! Soy Marcos tu asesor financiero
-          </p>
-        </div>
-        <ChatBubble />
-      </div>
     </div>
   )
 }

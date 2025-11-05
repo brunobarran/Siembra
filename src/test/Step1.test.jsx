@@ -93,15 +93,6 @@ describe('Step1 Component', () => {
       expect(screen.getByText(/Términos & condiciones/i)).toBeInTheDocument()
       expect(screen.getByText(/© 2025 AFP Siembra/i)).toBeInTheDocument()
     })
-
-    it('renders ChatBubble component', () => {
-      const onNext = vi.fn()
-      const onBack = vi.fn()
-      render(<Step1 data={mockData} onNext={onNext} onBack={onBack} />)
-
-      const chatBubble = screen.getByText(/💬/)
-      expect(chatBubble).toBeInTheDocument()
-    })
   })
 
   describe('Age Calculation', () => {

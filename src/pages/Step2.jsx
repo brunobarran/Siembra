@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Header from '../components/Header'
 import ProgressBar from '../components/ProgressBar'
 import Footer from '../components/Footer'
-import ChatBubble from '../components/ChatBubble'
 
 export default function Step2({ data, onNext, onBack }) {
   const [formData, setFormData] = useState({
@@ -437,7 +436,6 @@ export default function Step2({ data, onNext, onBack }) {
       </div>
 
       <Footer />
-      <ChatBubble />
     </div>
   )
 }
